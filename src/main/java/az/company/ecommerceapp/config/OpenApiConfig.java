@@ -26,7 +26,7 @@ public class OpenApiConfig {
                         .title("E commerce app")
                         .version("1.0.0")
                         .contact(new Contact()
-                                .email("support@ecommerce.az")))
+                                .email("anarftliyev@gmail.com")))
                 .components(new Components()
                         .addSecuritySchemes("bearerAuth", new SecurityScheme()
                                 .type(SecurityScheme.Type.HTTP)
