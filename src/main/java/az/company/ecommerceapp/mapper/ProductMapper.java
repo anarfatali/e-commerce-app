@@ -3,6 +3,7 @@ package az.company.ecommerceapp.mapper;
 import az.company.ecommerceapp.dto.response.ProductDetailResponse;
 import az.company.ecommerceapp.dto.response.ProductSummaryResponse;
 import az.company.ecommerceapp.model.entity.Product;
+import az.company.ecommerceapp.model.entity.ProductImage;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -54,14 +55,14 @@ public interface ProductMapper {
 
     @Named("detailImages")
     default List<String> detailImages(Product product) {
-        if (product.getImageUrls() != null && !product.getImageUrls().isEmpty()) {
-            return List.copyOf(product.getImageUrls());
+        if (product.getImages() != null && !product.getImages().isEmpty()) {
+            return product.getImages().stream()
+                    .map(ProductImage::getUrl)
+                    .toList();
         }
-
         if (product.getMainImageUrl() != null && !product.getMainImageUrl().isBlank()) {
             return List.of(product.getMainImageUrl());
         }
-
         return List.of();
     }
 }

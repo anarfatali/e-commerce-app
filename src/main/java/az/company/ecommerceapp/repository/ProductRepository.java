@@ -18,4 +18,11 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     @EntityGraph(attributePaths = "category")
     Optional<Product> findBySlugAndActiveTrue(String slug);
+
+    boolean existsBySlug(String slug);
+
+    Page<Product> findByActiveTrue(Pageable pageable);
+
+    boolean existsByCategoryIdAndActiveTrue(Long categoryId);
+
 }

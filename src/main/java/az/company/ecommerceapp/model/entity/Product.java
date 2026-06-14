@@ -1,17 +1,7 @@
 package az.company.ecommerceapp.model.entity;
 
 import az.company.ecommerceapp.util.SlugUtils;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OrderColumn;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -53,12 +43,9 @@ public class Product extends BaseAuditableEntity {
     @Column(name = "main_image_url")
     private String mainImageUrl;
 
-    @ElementCollection
-    @CollectionTable(name = "product_images", joinColumns = @JoinColumn(name = "product_id"))
-    @OrderColumn(name = "sort_order")
-    @Column(name = "image_url", nullable = false)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<String> imageUrls = new ArrayList<>();
+    private List<ProductImage> images = new ArrayList<>();
 
     @Column(name = "average_rating", nullable = false, precision = 3, scale = 2)
     @Builder.Default
@@ -67,6 +54,10 @@ public class Product extends BaseAuditableEntity {
     @Column(name = "review_count", nullable = false)
     @Builder.Default
     private int reviewCount = 0;
+
+    @Column(name = "stock_quantity", nullable = false)
+    @Builder.Default
+    private int stockQuantity = 0;
 
     @Column(name = "is_new", nullable = false)
     @Builder.Default
