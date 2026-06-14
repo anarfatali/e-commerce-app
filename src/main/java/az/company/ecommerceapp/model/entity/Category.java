@@ -44,6 +44,9 @@ public class Category extends BaseAuditableEntity {
     @Builder.Default
     private List<Category> children = new ArrayList<>();
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "display_order", nullable = false)
     @Builder.Default
     private Integer displayOrder = 0;
