@@ -28,6 +28,9 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new IllegalArgumentException("Invalid authorization header");
+        }
         String token = authHeader.substring(7);
         authService.logout(token);
         return ResponseEntity.noContent().build();
@@ -39,9 +42,9 @@ public class AuthController {
     }
 
     @PostMapping("/verify-email")
-    public ResponseEntity<Void> verifyEmail(@RequestBody @Valid VerifyEmailRequest request) {
+    public ResponseEntity<String> verifyEmail(@RequestBody @Valid VerifyEmailRequest request) {
         authService.verifyEmail(request);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Email verified successfully");
     }
 
     @PostMapping("/forgot-password")

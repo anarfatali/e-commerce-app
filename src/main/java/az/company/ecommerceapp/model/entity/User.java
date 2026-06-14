@@ -70,4 +70,8 @@ public class User extends BaseAuditableEntity {
     @Column(name = "status", nullable = false)
     @Builder.Default
     private UserStatus status = UserStatus.ACTIVE;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean emailVerified = false;
 }
