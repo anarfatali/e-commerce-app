@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ecommerce -d ecommerce"]
+      test: [ "CMD-SHELL", "pg_isready -U ecommerce -d ecommerce" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -23,6 +23,9 @@ services:
     ports:
       - "8080:8080"
     environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/ecommerce
+      SPRING_DATASOURCE_USERNAME: ecommerce
+      SPRING_DATASOURCE_PASSWORD: ecommerce
       SPRING_PROFILES_ACTIVE: docker
       SPRINGDOC_SERVER_URL: http://localhost:8080
     depends_on:
