@@ -50,6 +50,9 @@ public class User extends BaseAuditableEntity {
     @Column(name = "avatar_url")
     private String avatarUrl;
 
+    @Column(name = "avatar_public_id")
+    private String avatarPublicId;
+
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 

@@ -20,6 +20,8 @@ services:
   app:
     build: .
     container_name: ecommerce-app
+    env_file:
+      - .env
     ports:
       - "8080:8080"
     environment:

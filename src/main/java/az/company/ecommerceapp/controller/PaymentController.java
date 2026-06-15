@@ -14,8 +14,6 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
-    // Called after placeOrder — processes payment for the given order.
-    // On success: order moves to CONFIRMED, payment moves to PAID.
     @PostMapping("/{orderId}")
     public ResponseEntity<PaymentResponse> processPayment(
             @AuthenticationPrincipal Long userId,

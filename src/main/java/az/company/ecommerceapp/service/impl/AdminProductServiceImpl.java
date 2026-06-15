@@ -80,7 +80,6 @@ public class AdminProductServiceImpl implements AdminProductService {
         }
 
         if (request.discountPrice() != null) {
-            // Use the updated price if it was also changed in this request
             BigDecimal effectivePrice = request.price() != null ? request.price() : product.getOriginalPrice();
             validateDiscountPrice(effectivePrice, request.discountPrice());
             product.setDiscountPrice(request.discountPrice());
@@ -107,7 +106,6 @@ public class AdminProductServiceImpl implements AdminProductService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found: " + id));
 
-        // Soft delete — order_items reference this product; hard delete would corrupt order history
         product.setActive(false);
         productRepository.save(product);
     }
