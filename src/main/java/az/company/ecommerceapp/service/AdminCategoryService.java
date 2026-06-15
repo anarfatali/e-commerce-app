@@ -6,7 +6,7 @@ import az.company.ecommerceapp.dto.response.CategoryAdminResponse;
 
 public interface AdminCategoryService {
 
-    CategoryAdminResponse createCategory(CategoryCreateRequest request);
+    void createCategory(CategoryCreateRequest request);
 
     CategoryAdminResponse updateCategory(Long id, CategoryUpdateRequest request);
 

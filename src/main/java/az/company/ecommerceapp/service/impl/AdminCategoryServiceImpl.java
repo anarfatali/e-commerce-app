@@ -25,7 +25,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
 
     @Override
     @Transactional
-    public CategoryAdminResponse createCategory(CategoryCreateRequest request) {
+    public void createCategory(CategoryCreateRequest request) {
         String slug = resolveSlug(request.slug(), request.name());
         if (categoryRepository.existsBySlug(slug)) {
             throw new DuplicateSlugException("Category slug already exists: " + slug);
@@ -40,7 +40,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         category.setParent(parent);
         category.setActive(true);
 
-        return categoryMapper.toAdminResponse(categoryRepository.save(category));
+        categoryMapper.toAdminResponse(categoryRepository.save(category));
     }
 
     @Override
