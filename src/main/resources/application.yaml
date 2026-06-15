@@ -20,8 +20,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: anarftliyev@gmail.com
-    password: fvgi gbyu dnsl byjb
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:
@@ -30,16 +30,16 @@ spring:
             enable: true
             required: true
 logging:
-    level:
-        root: DEBUG
-        com.example.ecommerceapp: DEBUG
+  level:
+    root: DEBUG
+    com.example.ecommerceapp: DEBUG
 
 springdoc:
   server-url: http://localhost:8080
 
 cloudinary:
-  cloud-name: dmysg4p06
-  api-key: 355513464313338
-  api-secret: qTPd1H4rwh-Ha9qsFu9abr8lRFE
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}
   upload-folder: e-commerce-app/images
 
