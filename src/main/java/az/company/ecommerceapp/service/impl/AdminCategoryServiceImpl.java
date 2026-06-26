@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AdminCategoryServiceImpl implements AdminCategoryService {
@@ -69,9 +71,6 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
             category.setActive(request.active());
         }
 
-        // parentId == null  → don't change
-        // parentId == 0     → remove parent (make top-level)
-        // parentId > 0      → assign new parent
         if (request.parentId() != null) {
             category.setParent(resolveParent(request.parentId(), id));
         }
@@ -100,6 +99,15 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         return categoryRepository.findById(id)
                 .map(categoryMapper::toAdminResponse)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found: " + id));
+    }
+
+    @Override
+    public List<CategoryAdminResponse> getAllCategories() {
+        return categoryRepository.findAll()
+                .stream()
+                .filter(Category::isActive)
+                .map(categoryMapper::toAdminResponse)
+                .toList();
     }
 
     private String resolveSlug(String provided, String name) {

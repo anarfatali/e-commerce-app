@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record ProductDetailResponse(
+        Long id,
         String name,
         String slug,
         String description,
@@ -14,6 +15,7 @@ public record ProductDetailResponse(
         BigDecimal activePrice,
         BigDecimal discountPercentage,
         BigDecimal averageRating,
+        Long stockQuantity,
         int reviewCount,
         boolean isNew,
         boolean bestSeller,

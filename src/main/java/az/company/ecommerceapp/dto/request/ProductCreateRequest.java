@@ -25,10 +25,10 @@ public record ProductCreateRequest(
         BigDecimal discountPrice,
 
         @Min(value = 0, message = "Stock quantity cannot be negative")
-        int stockQuantity,
+        Integer stockQuantity,
 
         @NotNull(message = "Category is required")
         Long categoryId,
 
-        boolean active
+        Boolean active
 ) {}

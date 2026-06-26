@@ -29,6 +29,7 @@ public class AdminProductMapper {
                 product.isActive(),
                 product.getCategory().getId(),
                 product.getCategory().getName(),
+                product.getMainImageUrl(),
                 images,
                 product.getCreatedDate(),
                 product.getUpdatedDate()

@@ -56,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
                 .lastName(request.lastName())
                 .phoneNumber(request.phoneNumber())
                 .role(Role.CUSTOMER)
-                .emailVerified(false)
+                .emailVerified(true)
                 .build();
 
         userRepository.save(user);
@@ -169,7 +169,7 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public void resetPassword(ResetPasswordRequest request) {
         PasswordResetToken record = passwordResetTokenRepository
-                .findByToken(request.token())
+                .findByToken(request.code())
                 .orElseThrow(() -> new InvalidTokenException("Invalid or expired reset token"));
 
         if (record.isUsed()) {

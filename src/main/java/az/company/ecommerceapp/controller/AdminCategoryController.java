@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/admin/categories")
 @RequiredArgsConstructor
@@ -38,6 +40,11 @@ public class AdminCategoryController {
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         adminCategoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CategoryAdminResponse>> getAllCategories() {
+        return ResponseEntity.ok(adminCategoryService.getAllCategories());
     }
 
     @GetMapping("/{id}")

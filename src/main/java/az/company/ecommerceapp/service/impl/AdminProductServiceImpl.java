@@ -3,6 +3,7 @@ package az.company.ecommerceapp.service.impl;
 import az.company.ecommerceapp.dto.request.ProductCreateRequest;
 import az.company.ecommerceapp.dto.request.ProductUpdateRequest;
 import az.company.ecommerceapp.dto.response.ProductAdminResponse;
+import az.company.ecommerceapp.dto.response.ProductPageResponse;
 import az.company.ecommerceapp.exception.DuplicateSlugException;
 import az.company.ecommerceapp.exception.ResourceNotFoundException;
 import az.company.ecommerceapp.mapper.AdminProductMapper;
@@ -31,10 +32,11 @@ public class AdminProductServiceImpl implements AdminProductService {
     private final CategoryRepository categoryRepository;
     private final ProductImageRepository productImageRepository;
     private final AdminProductMapper productMapper;
+    private final ProductServiceImpl productService;
 
     @Override
     @Transactional
-    public void createProduct(ProductCreateRequest request) {
+    public ProductAdminResponse createProduct(ProductCreateRequest request) {
         String slug = resolveSlug(request.slug(), request.name());
         if (productRepository.existsBySlug(slug)) {
             throw new DuplicateSlugException("Product slug already exists: " + slug);
@@ -55,6 +57,8 @@ public class AdminProductServiceImpl implements AdminProductService {
         product.setActive(request.active());
 
         productMapper.toAdminResponse(productRepository.save(product));
+
+        return productMapper.toAdminResponse(productRepository.save(product));
     }
 
     @Override
@@ -100,6 +104,31 @@ public class AdminProductServiceImpl implements AdminProductService {
         return productMapper.toAdminResponse(productRepository.save(product));
     }
 
+    @Transactional(readOnly = true)
+    public ProductPageResponse getAllProducts(
+            Long categoryId,
+            String categorySlug,
+            BigDecimal minPrice,
+            BigDecimal maxPrice,
+            String sort,
+            Boolean isNew,
+            Boolean bestSeller,
+            int page,
+            int size) {
+
+        return productService.getProducts(
+                categoryId,
+                categorySlug,
+                minPrice,
+                maxPrice,
+                sort,
+                isNew,
+                bestSeller,
+                page,
+                size
+        );
+    }
+
     @Override
     @Transactional
     public void deleteProduct(Long id) {
@@ -130,6 +159,11 @@ public class AdminProductServiceImpl implements AdminProductService {
         image.setProduct(product);
         image.setUrl(uploaded.url());
         image.setPublicId(uploaded.publicId());
+
+        if (product.getMainImageUrl() == null || product.getMainImageUrl().isBlank()) {
+            product.setMainImageUrl(image.getUrl());
+            productRepository.save(product);
+        }
 
         productImageRepository.save(image);
     }

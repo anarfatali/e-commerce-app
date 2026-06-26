@@ -17,6 +17,7 @@ public record ProductAdminResponse(
         boolean active,
         Long categoryId,
         String categoryName,
+        String mainImageUrl,
         List<ProductImageResponse> images,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
