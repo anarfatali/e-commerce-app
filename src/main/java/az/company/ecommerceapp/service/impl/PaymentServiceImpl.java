@@ -40,16 +40,12 @@ public class PaymentServiceImpl implements PaymentService {
 
         String transactionId = "TXN-" + UUID.randomUUID().toString().toUpperCase();
 
-        // ── Simulated payment gateway ──────────────────────────────────────────
-        // Replace this block with a real provider call (Stripe, PayPal, etc.)
-        // when you're ready. Everything below stays the same.
         log.info("[PAYMENT] Processing {} payment for order {} — amount: {} — txn: {}",
                 order.getOrderNumber(),
                 order.getTotalAmount(),
                 transactionId);
 
         log.info("[PAYMENT] ✓ Payment successful — txn: {}", transactionId);
-        // ──────────────────────────────────────────────────────────────────────
 
         order.setPaymentStatus(PaymentStatus.PAID);
         order.setStatus(OrderStatus.CONFIRMED);
